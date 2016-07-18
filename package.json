@@ -11,13 +11,14 @@
         "Other"
     ],
     "activationEvents": [
-        "onCommand:extension.sayHello"
+        "onCommand:extension.fsto"
     ],
     "main": "./out/src/extension",
     "contributes": {
         "commands": [{
-            "command": "extension.sayHello",
-            "title": "Hello World"
+            "command": "extension.fsto",
+            "title": "FSTO  - File Structure Text Output",
+            "description":"Write out a text representation of a given location's folder structure."
         }]
     },
     "scripts": {
