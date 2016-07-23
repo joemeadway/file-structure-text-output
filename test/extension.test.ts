@@ -22,3 +22,12 @@ suite("Extension Tests", () => {
 
 
 });
+
+
+//file exists/no
+//top level folders & files
+//single file found in a folder
+//single folder found
+//multiple folders found and listed
+//second level folders contents listed
+//empty folder nothing listed
