@@ -54,3 +54,10 @@ export function activate(context: vscode.ExtensionContext) {
 // this method is called when your extension is deactivated
 export function deactivate() {
 }
+
+//Looking at structure here:
+//https://github.com/Microsoft/vscode-wordcount/blob/master/extension.ts
+//Likely don't need the controller, but separate class for actual work for extension
+//including interacting with the application
+//instead - class with public methods - get file path, get output string, etc.
+//and have the method call these and use response, whcih then also gives neat api for testing 
