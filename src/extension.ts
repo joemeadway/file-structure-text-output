@@ -2,6 +2,10 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import Selection = vscode.Selection;
+import Window = vscode.window;
+import Range = vscode.Range;
+import Document = vscode.TextDocument;
 import * as fs from 'fs';
 
 // this method is called when your extension is activated
@@ -21,7 +25,19 @@ export function activate(context: vscode.ExtensionContext) {
         // Display a message box to the user
         //vscode.window.showInformationMessage('Hello World!');
 
-        fs.exists("c:\\dev\\icons\\", function(exists) {
+        //get selection
+        let selections = Window.activeTextEditor.selections;
+        //convert to string
+        //let d = Window.activeTextEditor.document;
+        //let location = d.getText(new Range(selections[0].start, selections[0].end))
+        
+        //any checks etc.
+        
+        //use to build folder structur
+        
+        //replace source text with output text on doc.
+
+        fs.exists("c:\\dev\\", function(exists) {
             if (exists) {
                 vscode.window.showInformationMessage('File Exists!');
             }
