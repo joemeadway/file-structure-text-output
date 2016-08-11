@@ -11,7 +11,7 @@ import * as assert from 'assert';
 import * as vscode from 'vscode';
 import * as ext from '../src/extension';
 
-import { FileCruncher } from '../src/fileCruncher';
+import { FileStructureDivination } from '../src/FileStructureDivination';
 
 // Defines a Mocha test suite to group tests of similar kind together
 suite("Extension Tests", () => {
@@ -22,9 +22,12 @@ suite("Extension Tests", () => {
         assert.equal(-1, [1, 2, 3].indexOf(0));
     });
 
-    let cruncher = new FileCruncher();
+    let divine = new FileStructureDivination();
 
-    cruncher.getFileStructure("input");
+    test("file does not exist returns error message", () =>{
+        assert.equal(divine.getFileStructure("non-existent"), "Error: File Not Found");
+    });
+
 });
 
 // // Defines a Mocha test suite to group tests of similar kind together

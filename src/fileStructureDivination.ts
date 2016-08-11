@@ -2,10 +2,13 @@
 
 import * as fs from 'fs';
 
-export class FileCruncher{
+export class FileStructureDivination{
 
 
     public getFileStructure(filePath: string){
+        
+        return "Error: File Not Found";
+    
         //how to handle errors etc. - check for magic strings? or is there a standard approach?
 
 
@@ -24,10 +27,15 @@ export class FileCruncher{
         //     }       
         // });
 
-
-        
-
-
     }
 
+}
+
+export class FileStructureOutput{
+    filePath : string
+    outputMessage : string
+    constructor(outputMessage:string, filePath:string){
+        this.outputMessage = outputMessage;
+        this.filePath = filePath;
+    }
 }
