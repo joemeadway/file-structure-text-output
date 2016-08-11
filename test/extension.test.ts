@@ -24,8 +24,10 @@ suite("Extension Tests", () => {
 
     let divine = new FileStructureDivination();
 
-    test("file does not exist returns error message", () =>{
-        assert.equal(divine.getFileStructure("non-existent"), "Error: File Not Found");
+    test("file does not exist returns error message and empty file string", () =>{
+        var output = divine.getFileStructure("non-existent");
+        assert.equal(output.outputMessage, "Error: File Not Found");
+        assert.equal(output.filePath, "");
     });
 
 });

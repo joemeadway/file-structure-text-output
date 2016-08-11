@@ -5,10 +5,9 @@ import * as fs from 'fs';
 export class FileStructureDivination{
 
 
-    public getFileStructure(filePath: string){
-        
-        return "Error: File Not Found";
-    
+    public getFileStructure(filePath: string) : FileStructureOutput {
+        var output = new FileStructureOutput("Error: File Not Found", "");
+        return output;
         //how to handle errors etc. - check for magic strings? or is there a standard approach?
 
 

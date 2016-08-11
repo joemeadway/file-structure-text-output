@@ -6,7 +6,7 @@ import Selection = vscode.Selection;
 import Window = vscode.window;
 import Range = vscode.Range;
 import Document = vscode.TextDocument;
-import { FileCruncher } from './fileCruncher';
+import { FileStructureDivination } from './fileStructureDivination';
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
