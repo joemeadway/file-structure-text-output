@@ -1,13 +1,21 @@
 'use strict';
 
 import * as fs from 'fs';
+var path = require('path');
+
 
 export class FileStructureDivination{
 
 
     public getFileStructure(filePath: string) : FileStructureOutput {
-        var output = new FileStructureOutput("Error: File Not Found", "");
-        return output;
+        if(!fs.existsSync(filePath)){
+            return new FileStructureOutput("Error: File Not Found", "");    
+        }
+        else{
+            return new FileStructureOutput("File found",path.basename(filePath));
+        }
+        
+        
         //how to handle errors etc. - check for magic strings? or is there a standard approach?
 
 

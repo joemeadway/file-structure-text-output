@@ -28,11 +28,11 @@ export function activate(context: vscode.ExtensionContext) {
         //get selection
         let selections = Window.activeTextEditor.selections;
         //convert to string
-        //let d = Window.activeTextEditor.document;
-        //let location = d.getText(new Range(selections[0].start, selections[0].end))
+        let d = Window.activeTextEditor.document;
+        let location = d.getText(new Range(selections[0].start, selections[0].end))
         
         //then initialise fileCruncher, and pass in string
-
+        
 
     });
 
