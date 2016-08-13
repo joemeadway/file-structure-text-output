@@ -20,15 +20,17 @@ suite("Extension Tests", () => {
 
     let divine = new FileStructureDivination();
 
-    //using mock-js to override default fs behaviour,which allows us to create a little
-    //in-memory temporary file system for testing 
+    //using mock-js to override default fs behaviour, which allows us to create a 
+    //temporary in-memory file system for testing 
     mock({
-        'path/to/fake/dir': {
+        'path/to/': {
         'some-file.txt': 'file content here',
-        'empty-dir': {/** empty directory */}
+        'dir-with-file': {
+            'single-file.txt':""    
+        }
     },
-        'path/to/file.txt': "",
-        'some/other/path': {/** another empty directory */}
+        'path/to/single-file.txt': "",
+        'single/empty/folder': {/** another empty directory */}
     });
 
     test("file does not exist returns error message and empty file string", () =>{
@@ -38,19 +40,23 @@ suite("Extension Tests", () => {
     });
 
     test("single empty folder is returned with success message", () =>{
-        var output = divine.getFileStructure("some/other/path");
+        var output = divine.getFileStructure("single/empty/folder");
         assert.equal(output.outputMessage, "File found");
-        assert.equal(output.filePath, "path");
+        assert.equal(output.filePath, "folder");
     });
 
-    test("single file is returned", () =>{
-         var output = divine.getFileStructure("path/to/file.txt");
+    test("single file is returned with success message", () =>{
+         var output = divine.getFileStructure("path/to/single-file.txt");
         assert.equal(output.outputMessage, "File found");
-         assert.equal(output.filePath, "file.txt");
+         assert.equal(output.filePath, "single-file.txt");
     });
 
+    test("folder with single file is return folder with file below", () =>{
+         var output = divine.getFileStructure("path/to/dir-with-file");
+        assert.equal(output.outputMessage, "File found");
+         assert.equal(output.filePath, "dir-with-file\n|= single-file.txt");
+    });
 
-    
     mock.restore
 
 

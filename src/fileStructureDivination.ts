@@ -11,9 +11,9 @@ export class FileStructureDivination{
         if(!fs.existsSync(filePath)){
             return new FileStructureOutput("Error: File Not Found", "");    
         }
-        else{
-            return new FileStructureOutput("File found",path.basename(filePath));
-        }
+
+        return new FileStructureOutput("File found",path.basename(filePath));
+        
         
         
         //how to handle errors etc. - check for magic strings? or is there a standard approach?
