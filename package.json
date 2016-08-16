@@ -17,7 +17,7 @@
   "contributes": {
     "commands": [
       {
-        "command": "extension.fsto",  
+        "command": "extension.fsto",
         "title": "FSTO  - File Structure Text Output",
         "description": "Write out a text representation of a given location's folder structure."
       }
@@ -29,6 +29,7 @@
     "postinstall": "node ./node_modules/vscode/bin/install"
   },
   "devDependencies": {
+    "freetree": "^0.2.2",
     "mock-fs": "^3.11.0",
     "typescript": "^1.8.5",
     "vscode": "^0.11.0"

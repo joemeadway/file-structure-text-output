@@ -2,6 +2,7 @@
 
 import * as fs from 'fs';
 var path = require('path');
+var freetree = require('freetree');
 
 
 export class FileStructureDivination{
