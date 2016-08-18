@@ -13,6 +13,14 @@ export class FileStructureDivination{
             return new FileStructureOutput("Error: File Not Found", "");    
         }
 
+        console.log(fs.readdirSync("path/to/"))
+        //returns
+        // Array[3]
+        // 0:"dir-with-file"
+        // 1:"single-file.txt"
+        // 2:"some-file.txt"
+
+
         return new FileStructureOutput("File found",path.basename(filePath));
         
         
