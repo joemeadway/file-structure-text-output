@@ -1,8 +1,8 @@
 'use strict';
 
 import * as fs from 'fs';
+var execSync = require('child_process').execSync; 
 var path = require('path');
-var freetree = require('freetree');
 
 
 export class FileStructureDivination{
@@ -13,7 +13,11 @@ export class FileStructureDivination{
             return new FileStructureOutput("Error: File Not Found", "");    
         }
 
-        console.log(fs.readdirSync("path/to/"))
+        var treeCmdResult = execSync('tree ' + filePath);
+
+        console.log(treeCmdResult.toString());
+
+        //console.log(fs.readdirSync("path/to/"))
         //returns
         // Array[3]
         // 0:"dir-with-file"
