@@ -13,19 +13,14 @@ export class FileStructureDivination{
             return new FileStructureOutput("Error: File Not Found", "");    
         }
 
-        var treeCmdResult = execSync('tree ' + filePath);
+        var bufferResult = execSync('tree ' + filePath);
+        var treeCmdResult = bufferResult.toString('utf-8');
+        var split = treeCmdResult.substring(treeCmdResult.indexOf(filePath.toUpperCase()));
 
-        console.log(treeCmdResult.toString());
-
-        //console.log(fs.readdirSync("path/to/"))
-        //returns
-        // Array[3]
-        // 0:"dir-with-file"
-        // 1:"single-file.txt"
-        // 2:"some-file.txt"
+        console.log(split);
 
 
-        return new FileStructureOutput("File found",path.basename(filePath));
+        return new FileStructureOutput("File found",split);
         
         
         

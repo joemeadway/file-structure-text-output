@@ -6,6 +6,7 @@ import Selection = vscode.Selection;
 import Window = vscode.window;
 import Range = vscode.Range;
 import Document = vscode.TextDocument;
+import TextEditor = vscode.TextEditor;
 import { FileStructureDivination } from './fileStructureDivination';
 
 // this method is called when your extension is activated
@@ -32,7 +33,14 @@ export function activate(context: vscode.ExtensionContext) {
         let location = d.getText(new Range(selections[0].start, selections[0].end))
         
         //then initialise fileCruncher, and pass in string
+        var diviner = new FileStructureDivination();
+        var returnedStructure = diviner.getFileStructure(location);
         
+
+        var editor = Window.activeTextEditor;
+        editor.edit(function (edit) {
+            edit.replace(selections[0], returnedStructure.filePath);
+        });
 
     });
 
