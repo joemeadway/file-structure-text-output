@@ -11,7 +11,7 @@ import * as assert from 'assert';
 import * as vscode from 'vscode';
 import * as ext from '../src/extension';
 import { FileStructureDivination } from '../src/FileStructureDivination';
-import { FileNode } from '../src/FileStructureDivination';
+// import { FileNode } from '../src/FileStructureDivination';
 
 var mock = require('mock-fs');
 
@@ -25,12 +25,12 @@ suite("FileStructureDivination Tests", () => {
     //temporary in-memory file system for testing 
     mock({
         'path/to/': {
-        'some-file.txt': 'file content here',
-        'dir-with-file': {
-            'single-file.txt':""    
-        }
+            'some-file.txt': 'file content here',
+            'dir-with-file': {
+                'single-file.txt':""    
+            }
     },
-        'path/to/single-file.txt': "",
+        'single/path/to/single-file.txt': "",
         'single/empty/folder': {/** another empty directory */}
     });
 
@@ -47,9 +47,15 @@ suite("FileStructureDivination Tests", () => {
     });
 
     test("single file is returned with success message", () =>{
-         var output = divine.getFileStructure("path/to/single-file.txt");
+         var output = divine.getFileStructure("single/path/to/single-file.txt");
         assert.equal(output.outputMessage, "File found");
          assert.equal(output.filePath, "single-file.txt");
+    });
+
+    test("folder with single file is returned with success message", () =>{
+         var output = divine.getFileStructure("path/to");
+         assert.equal(output.outputMessage, "File found");
+         assert.equal(output.filePath, "dir-with-file\n|--- single-file.txt\n");
     });
 
     
@@ -58,22 +64,22 @@ suite("FileStructureDivination Tests", () => {
 
 });
 
-suite("FileNode Tests", () => {
-    test("file node to string outputs own filename", () =>{
-        var node = new FileNode();
-        node.name = "file-name.txt";
-        assert.equal(node.toString(), "file-name.txt");
-    });
+// suite("FileNode Tests", () => {
+//     test("file node to string outputs own filename", () =>{
+//         var node = new FileNode();
+//         node.name = "file-name.txt";
+//         assert.equal(node.toString(), "file-name.txt");
+//     });
     
-    test("file node with child to string outputs own filename and child", () =>{
-        var node = new FileNode();
-        node.name = "dir-with-file";
-        var childNode = new FileNode();
-        childNode.name = "single-file.txt";
-        node.children = childNode;
-        assert.equal(node.toString(), "dir-with-file\n|- single-file.txt");
-    });
-});
+//     test("file node with child to string outputs own filename and child", () =>{
+//         var node = new FileNode();
+//         node.name = "dir-with-file";
+//         var childNode = new FileNode();
+//         childNode.name = "single-file.txt";
+//         node.children = childNode;
+//         assert.equal(node.toString(), "dir-with-file\n|- single-file.txt");
+//     });
+// });
 
 // This outputs location of where the code is executing
 // console.log(`Starting directory: ${process.cwd()}`);
