@@ -11,11 +11,12 @@ import * as assert from 'assert';
 import * as vscode from 'vscode';
 import * as ext from '../src/extension';
 import { FileStructureDivination } from '../src/FileStructureDivination';
+import { FileNode } from '../src/FileStructureDivination';
 
 var mock = require('mock-fs');
 
 // Defines a Mocha test suite to group tests of similar kind together
-suite("Extension Tests", () => {
+suite("FileStructureDivination Tests", () => {
 
 
     let divine = new FileStructureDivination();
@@ -51,15 +52,27 @@ suite("Extension Tests", () => {
          assert.equal(output.filePath, "single-file.txt");
     });
 
-    test("folder with single file is return folder with file below", () =>{
-         var output = divine.getFileStructure("path/to/dir-with-file");
-        assert.equal(output.outputMessage, "File found");
-         assert.equal(output.filePath, "dir-with-file\n|= single-file.txt");
-    });
-
+    
     mock.restore
 
 
+});
+
+suite("FileNode Tests", () => {
+    test("file node to string outputs own filename", () =>{
+        var node = new FileNode();
+        node.name = "file-name.txt";
+        assert.equal(node.toString(), "file-name.txt");
+    });
+    
+    test("file node with child to string outputs own filename and child", () =>{
+        var node = new FileNode();
+        node.name = "dir-with-file";
+        var childNode = new FileNode();
+        childNode.name = "single-file.txt";
+        node.children = childNode;
+        assert.equal(node.toString(), "dir-with-file\n|- single-file.txt");
+    });
 });
 
 // This outputs location of where the code is executing

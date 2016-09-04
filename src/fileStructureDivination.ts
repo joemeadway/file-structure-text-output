@@ -13,11 +13,8 @@ export class FileStructureDivination{
             return new FileStructureOutput("Error: File Not Found", "");    
         }
 
-        var treeCmdResult = execSync('tree ' + filePath);
 
-        console.log(treeCmdResult.toString());
-
-        //console.log(fs.readdirSync("path/to/"))
+        console.log(fs.readdirSync("path/to/"))
         //returns
         // Array[3]
         // 0:"dir-with-file"
@@ -58,4 +55,14 @@ export class FileStructureOutput{
         this.outputMessage = outputMessage;
         this.filePath = filePath;
     }
+}
+
+export class FileNode{
+    name: string;
+    children: FileNode;
+    public toString() : String{
+        return this.name;
+    }
+
+
 }
