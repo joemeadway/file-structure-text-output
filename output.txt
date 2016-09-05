@@ -1,0 +1,44 @@
+﻿folder
+\--- folder
+|	\--- folder
+|	|	\--- folder
+|	|	|	\--- file
+|       \--- file
+\--- file
+
+
+
+C:\DEV\PROJECTEULER
+├───ProjectEuler
+│   ├───bin
+│   │   ├───Debug
+│   │   └───Release
+│   └───obj
+│       └───Debug
+│           └───TempPE
+├───ProjectEulerTest
+│   ├───bin
+│   │   ├───Debug
+│   │   └───Release
+│   └───obj
+│       └───Debug
+│           └───TempPE
+├───src
+│   └───ProjectEuler
+├───test
+│   └───ProjectEuler.Tests
+└───TestResults
+    ├───Deploy_Joe 2016-07-05 21_15_02
+    │   ├───In
+    │   │   └───JOE-S7
+    │   └───Out
+    ├───Deploy_Joe 2016-07-05 21_52_10
+    │   ├───In
+    │   │   └───JOE-S7
+    │   └───Out
+    └───Deploy_Joe 2016-07-05 21_52_14
+        ├───In
+        │   └───JOE-S7
+        └───Out
+
+	

@@ -13,15 +13,50 @@ export class FileStructureDivination{
             return new FileStructureOutput("Error: File Not Found", "");    
         }
 
-        var bufferResult = execSync('tree ' + filePath);
-        var treeCmdResult = bufferResult.toString('utf-8');
-        var split = treeCmdResult.substring(treeCmdResult.indexOf(filePath.toUpperCase()));
 
-        console.log(split);
+        //console.log(fs.readdirSync('path/to/'))
+        // var rootContents = fs.readdirSync(filePath);
+        // if(rootContents.length > 0){    
+        //     for(var i = 0; i<= rootContents.length; i++){
+        //         console.log("found - " + filePath+"/" + rootContents[i]);
+        //     }
+        // }
+
+        var root = path.basename(filePath);
+        var output = "";
+        output += root + "\n";
+
+        if(fs.lstatSync(filePath).isDirectory()){
+            var rootContents = fs.readdirSync(filePath);
+            //console.log(rootContents);
+            //console.log(rootContents.length);
+            if(rootContents.length > 0){    
+                for(var i = 0; i< rootContents.length; i++){
+                    output += "|--- "+rootContents[i]+"\n";
+                    //console.log("found - " + filePath+"/" + rootContents[i]);
+                }
+            }
+        }
+
+        //returns
+        // Array[3]
+        // 0:"dir-with-file"
+        // 1:"single-file.txt"
+        // 2:"some-file.txt"
 
 
-        return new FileStructureOutput("File found",split);
+
+
+        return new FileStructureOutput("File found",output);
         
+        // output straight to string 
+        // loop through each item in folder
+        // get full file path - e.g. c:\dev\test\folder\file.txt
+        // remove everything up to root - \test\folder\file.txt
+        // count slashes - 3
+        // write out pipe-tab for number of slahes - 1 e.g. |   | 
+        // then append pipe-dashes-space-filename - |    |    |--- file.txt (and new line)
+        // if folder, loop through any children, adding to string
         
         
         //how to handle errors etc. - check for magic strings? or is there a standard approach?
@@ -53,4 +88,14 @@ export class FileStructureOutput{
         this.outputMessage = outputMessage;
         this.filePath = filePath;
     }
+}
+
+export class FileNode{
+    name: string;
+    children: FileNode;
+    public toString() : String{
+        return this.name;
+    }
+
+
 }
