@@ -44,7 +44,10 @@ suite("FileStructureDivination Tests", () => {
                 }
             }
         },
-        'single/empty/folder':{},
+        'single/empty/root':{},
+        'single/empty/notroot':{
+            'folder':{}
+        },
         'single/path/to/single-file.txt':'content'
     });
 
@@ -54,8 +57,14 @@ suite("FileStructureDivination Tests", () => {
         assert.equal(output.filePath, "");
     });
 
-    test("single empty folder is returned returns only the empty root folder", () =>{
-        var output = divine.getFileStructure("single/empty/folder");
+    test("root is single empty folder is returned returns only the empty root folder", () =>{
+        var output = divine.getFileStructure("single/empty/root");
+        assert.equal(output.outputMessage, "File found");
+        assert.equal(output.filePath, "root\n");
+    });
+
+    test("non-root empty folder returns only the empty folder", () =>{
+        var output = divine.getFileStructure("single/empty/notroot/folder");
         assert.equal(output.outputMessage, "File found");
         assert.equal(output.filePath, "folder\n");
     });

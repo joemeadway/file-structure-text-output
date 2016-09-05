@@ -7,44 +7,24 @@ var path = require('path');
 
 export class FileStructureDivination{
 
+    private _filePath:string;
+    private _root:string;
 
     public getFileStructure(filePath: string) : FileStructureOutput {
         if(!fs.existsSync(filePath)){
             return new FileStructureOutput("Error: File Not Found", "");    
         }
-
-
-        //console.log(fs.readdirSync('path/to/'))
-        // var rootContents = fs.readdirSync(filePath);
-        // if(rootContents.length > 0){    
-        //     for(var i = 0; i<= rootContents.length; i++){
-        //         console.log("found - " + filePath+"/" + rootContents[i]);
-        //     }
-        // }
-
-        var root = path.basename(filePath);
+        this._filePath = filePath;
+        this._root = path.basename(this._filePath);
+        
         var output = "";
-        output += root + "\n";
+        output += this._root + "\n";
 
-        if(fs.lstatSync(filePath).isDirectory()){
-            var rootContents = fs.readdirSync(filePath);
-            //console.log(rootContents);
-            //console.log(rootContents.length);
-            if(rootContents.length > 0){    
-                for(var i = 0; i< rootContents.length; i++){
-                    output += "|--- "+rootContents[i]+"\n";
-                    //console.log("found - " + filePath+"/" + rootContents[i]);
-                }
-            }
+        //checking if root is directory or not here means this check is made twice
+        //could likely remove one call, but leaving it in for the time being          
+        if(fs.lstatSync(this._filePath).isDirectory()){
+            output += this.getTextForLocation(this._filePath);
         }
-
-        //returns
-        // Array[3]
-        // 0:"dir-with-file"
-        // 1:"single-file.txt"
-        // 2:"some-file.txt"
-
-
 
 
         return new FileStructureOutput("File found",output);
@@ -61,24 +41,65 @@ export class FileStructureDivination{
         
         //how to handle errors etc. - check for magic strings? or is there a standard approach?
 
-
-        //any checks etc.
-        
-        //use to build folder structur
-        
-        //replace source text with output text on doc.
-
-        // fs.exists("c:\\dev\\", function(exists) {
-        //     if (exists) {
-        //         vscode.window.showInformationMessage('File Exists!');
-        //     }
-        //     else{
-        //         vscode.window.showInformationMessage('Not found!');
-        //     }       
-        // });
-
     }
 
+    private getTextForLocation(currentFolderPath : string) :string{
+        var output = "";
+
+        if(fs.lstatSync(currentFolderPath).isDirectory()){ 
+            output += this.writeThisLocation(currentFolderPath);
+            var folderContents = fs.readdirSync(currentFolderPath);
+            if(folderContents.length > 0){
+                for(var i=0; i<folderContents.length; i++){
+                    output+=this.getTextForLocation(currentFolderPath+"/"+folderContents[i]);
+                }
+            }
+            else{
+                output += this.writeThisLocation(currentFolderPath);
+            }
+
+
+            // 
+            // //console.log(rootContents);
+            // //console.log(rootContents.length);
+            // if(rootContents.length > 0){    
+            //     output += this.getTextForFile(this._filePath);
+            //     for(var i = 0; i< rootContents.length; i++){
+            //         output += this.getTextForFile(this._filePath, rootContents[i]);
+            //         //output += "|--- "+rootContents[i]+"\n";
+            //         //console.log("found - " + filePath+"/" + rootContents[i]);
+            //     }
+            // }
+        }
+        else{
+            output += this.writeThisLocation(currentFolderPath);
+            //append file
+        }
+
+
+
+        //"|--- "+rootContents[i]+"\n";
+        return output;
+    }
+
+    private writeThisLocation(locationPath:string):string{
+        // remove everything up to root - \test\folder\file.txt
+        // count slashes - 3
+        // write out pipe-tab for number of slahes - 1 e.g. |   | 
+        // then append pipe-dashes-space-filename - |    |    |--- file.txt (and new line)
+
+        var output = "";
+        var basename = path.basename(locationPath);
+        if(basename !== this._root){
+            var segment = locationPath.slice(locationPath.indexOf(this._root));
+            var slashCount = segment.split("/").length - 1;
+            for(var i = 1; i < slashCount; i++){
+                output += "|    ";
+            }
+            output += "|--- " + path.basename(locationPath) + "\n";
+        }
+        return output;
+    }
 }
 
 export class FileStructureOutput{
