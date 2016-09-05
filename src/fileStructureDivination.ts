@@ -15,19 +15,24 @@ export class FileStructureDivination{
 
 
         //console.log(fs.readdirSync('path/to/'))
-        var rootContents = fs.readdirSync(filePath);
-        if(rootContents.length > 0){    
-            for(var i = 0; i<= rootContents.length; i++){
-                console.log("found - " + filePath+"/" + rootContents[i]);
-            }
-        }
+        // var rootContents = fs.readdirSync(filePath);
+        // if(rootContents.length > 0){    
+        //     for(var i = 0; i<= rootContents.length; i++){
+        //         console.log("found - " + filePath+"/" + rootContents[i]);
+        //     }
+        // }
 
+        var root = path.basename(filePath);
+        var output = "";
+        output += root + "\n";
 
         if(fs.lstatSync(filePath).isDirectory()){
             var rootContents = fs.readdirSync(filePath);
+            console.log(rootContents);
             if(rootContents.length > 0){    
                 for(var i = 0; i<= rootContents.length; i++){
-                    console.log("found - " + filePath+"/" + rootContents[i]);
+                    output += "|--- "+rootContents[i]+"\n";
+                    //console.log("found - " + filePath+"/" + rootContents[i]);
                 }
             }
         }
@@ -41,7 +46,7 @@ export class FileStructureDivination{
 
 
 
-        return new FileStructureOutput("File found",path.basename(filePath));
+        return new FileStructureOutput("File found",output);
         
         // output straight to string 
         // loop through each item in folder

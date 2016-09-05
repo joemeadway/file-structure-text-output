@@ -34,23 +34,23 @@ suite("FileStructureDivination Tests", () => {
         'single/empty/folder': {/** another empty directory */}
     });
 
-    test("file does not exist returns error message and empty file string", () =>{
-        var output = divine.getFileStructure("non-existent");
-        assert.equal(output.outputMessage, "Error: File Not Found");
-        assert.equal(output.filePath, "");
-    });
+    // test("file does not exist returns error message and empty file string", () =>{
+    //     var output = divine.getFileStructure("non-existent");
+    //     assert.equal(output.outputMessage, "Error: File Not Found");
+    //     assert.equal(output.filePath, "");
+    // });
 
-    test("single empty folder is returned with success message", () =>{
-        var output = divine.getFileStructure("single/empty/folder");
-        assert.equal(output.outputMessage, "File found");
-        assert.equal(output.filePath, "folder");
-    });
+    // test("single empty folder is returned returns only the empty root folder", () =>{
+    //     var output = divine.getFileStructure("single/empty/folder");
+    //     assert.equal(output.outputMessage, "File found");
+    //     assert.equal(output.filePath, "folder\n");
+    // });
 
-    test("single file is returned with success message", () =>{
-         var output = divine.getFileStructure("single/path/to/single-file.txt");
-        assert.equal(output.outputMessage, "File found");
-         assert.equal(output.filePath, "single-file.txt");
-    });
+    // test("single file is returned with success message", () =>{
+    //      var output = divine.getFileStructure("single/path/to/single-file.txt");
+    //     assert.equal(output.outputMessage, "File found");
+    //      assert.equal(output.filePath, "single-file.txt\n");
+    // });
 
     test("folder with single file is returned with success message", () =>{
          var output = divine.getFileStructure("path/to");
