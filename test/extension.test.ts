@@ -27,37 +27,72 @@ suite("FileStructureDivination Tests", () => {
         'path/to/': {
             'some-file.txt': 'file content here',
             'dir-with-file': {
-                'single-file.txt':""    
+                'single-file.txt':"file content"    
+            },
+            'multiple':{
+                'emptyfolder1':{},
+                'emptyfolder2':{},
+            },
+            'multiplemixed':{
+                'emptyfolder1':{},
+                'file.txt':'',
+            },
+            'withasubfolder':{
+                'folderwithfile':{
+                    'file.txt':'contents'
+                }
             }
-    },
-        'single/path/to/single-file.txt': "",
-        'single/empty/folder': {/** another empty directory */}
+        },
+        'single/empty/folder':{},
+        'single/path/to/single-file.txt':'content'
     });
 
-    // test("file does not exist returns error message and empty file string", () =>{
-    //     var output = divine.getFileStructure("non-existent");
-    //     assert.equal(output.outputMessage, "Error: File Not Found");
-    //     assert.equal(output.filePath, "");
-    // });
+    test("file does not exist returns error message and empty file string", () =>{
+        var output = divine.getFileStructure("non-existent");
+        assert.equal(output.outputMessage, "Error: File Not Found");
+        assert.equal(output.filePath, "");
+    });
 
-    // test("single empty folder is returned returns only the empty root folder", () =>{
-    //     var output = divine.getFileStructure("single/empty/folder");
-    //     assert.equal(output.outputMessage, "File found");
-    //     assert.equal(output.filePath, "folder\n");
-    // });
+    test("single empty folder is returned returns only the empty root folder", () =>{
+        var output = divine.getFileStructure("single/empty/folder");
+        assert.equal(output.outputMessage, "File found");
+        assert.equal(output.filePath, "folder\n");
+    });
 
-    // test("single file is returned with success message", () =>{
-    //      var output = divine.getFileStructure("single/path/to/single-file.txt");
-    //     assert.equal(output.outputMessage, "File found");
-    //      assert.equal(output.filePath, "single-file.txt\n");
-    // });
+    test("single file is returned with success message", () =>{
+         var output = divine.getFileStructure("single/path/to/single-file.txt");
+        assert.equal(output.outputMessage, "File found");
+         assert.equal(output.filePath, "single-file.txt\n");
+    });
 
-    test("folder with single file is returned with success message", () =>{
-         var output = divine.getFileStructure("path/to");
+    test("location with single file is returned with success message", () =>{
+         var output = divine.getFileStructure("path/to/dir-with-file");
          assert.equal(output.outputMessage, "File found");
          assert.equal(output.filePath, "dir-with-file\n|--- single-file.txt\n");
     });
+       
+    test("location with multiple folders returns both folders listed", () =>{
+         var output = divine.getFileStructure("path/to/multiple");
+         assert.equal(output.outputMessage, "File found");
+         assert.equal(output.filePath, "multiple\n|--- emptyfolder1\n|--- emptyfolder2\n");
+    });
 
+    test("location with multiple folders and files returns all contents listed", () =>{
+         var output = divine.getFileStructure("path/to/multiplemixed");
+         assert.equal(output.outputMessage, "File found");
+         assert.equal(output.filePath, "multiplemixed\n|--- emptyfolder1\n|--- file.txt\n");
+    });
+
+    
+    //expected:
+    //withasubfolder
+    //|--- folderwithfile
+    //|    |--- file.txt
+    test("location with a folder with contents lists contents of subfolder indented with four spaces", () =>{
+         var output = divine.getFileStructure("path/to/withasubfolder");
+         assert.equal(output.outputMessage, "File found");
+         assert.equal(output.filePath, "withasubfolder\n|--- folderwithfile\n|    |--- file.txt\n");
+    });
     
     mock.restore
 

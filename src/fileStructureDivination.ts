@@ -28,9 +28,10 @@ export class FileStructureDivination{
 
         if(fs.lstatSync(filePath).isDirectory()){
             var rootContents = fs.readdirSync(filePath);
-            console.log(rootContents);
+            //console.log(rootContents);
+            //console.log(rootContents.length);
             if(rootContents.length > 0){    
-                for(var i = 0; i<= rootContents.length; i++){
+                for(var i = 0; i< rootContents.length; i++){
                     output += "|--- "+rootContents[i]+"\n";
                     //console.log("found - " + filePath+"/" + rootContents[i]);
                 }
