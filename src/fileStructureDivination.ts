@@ -12,6 +12,8 @@ export class FileStructureDivination{
     private _output:string;
 
     public getFileStructure(filePath: string) : FileStructureOutput {
+        filePath = filePath.trim();
+        
         if(!fs.existsSync(filePath)){
             return new FileStructureOutput("Error: File Not Found", "");    
         }

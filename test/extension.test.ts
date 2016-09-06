@@ -42,6 +42,31 @@ suite("FileStructureDivination Tests", () => {
                 'folderwithfile':{
                     'file.txt':'contents'
                 }
+            },
+            'withtwosubfolder':{
+                'folderwithfile1':{
+                    'file1.txt':'contents'
+                },
+                'folderwithfile2':{
+                    'file2.txt':'contents'
+                }
+            },
+            'complex':{
+                'folderwithfile1':{
+                    'file1.txt':'contents'
+                },
+                'folder':{
+                    'folder':{
+                        'folder':{
+                            'file.txt':'contents'
+                        },
+                        'file.txt':'',
+                        'file2.txt':''
+                    }
+                },
+                'folder2':{
+                    'file.txt':''
+                }
             }
         },
         'single/empty/root':{},
@@ -67,6 +92,24 @@ suite("FileStructureDivination Tests", () => {
         var output = divine.getFileStructure("single/empty/notroot/folder");
         assert.equal(output.outputMessage, "File found");
         assert.equal(output.filePath, "folder\n");
+    });
+
+    test("input has spaces included trims before returning result", () =>{
+        var output = divine.getFileStructure(" single/empty/root ");
+        assert.equal(output.outputMessage, "File found");
+        assert.equal(output.filePath, "root\n");
+    });
+
+    test("numerical input returns error message", () =>{
+        var output = divine.getFileStructure("1234435");
+        assert.equal(output.outputMessage, "Error: File Not Found");
+        assert.equal(output.filePath, "");
+    });
+
+    test("file location given in utf encoded string is returned with success message", () =>{
+         var output = divine.getFileStructure("\x73\x69\x6E\x67\x6C\x65\x2F\x70\x61\x74\x68\x2F\x74\x6F\x2F\x73\x69\x6E\x67\x6C\x65\x2D\x66\x69\x6C\x65\x2E\x74\x78\x74");
+        assert.equal(output.outputMessage, "File found");
+         assert.equal(output.filePath, "single-file.txt\n");
     });
 
     test("single file is returned with success message", () =>{
@@ -102,6 +145,38 @@ suite("FileStructureDivination Tests", () => {
          assert.equal(output.outputMessage, "File found");
          assert.equal(output.filePath, "withasubfolder\n|--- folderwithfile\n|    |--- file.txt\n");
     });
+
+    //expected:
+    //withtwosubfolder
+    //|--- folderwithfile1
+    //|    |--- file1.txt
+    //|--- folderwithfile2
+    //|    |--- file2.txt
+    test("location with a folder with two subfolders with contents full contents indented with four spaces", () =>{
+         var output = divine.getFileStructure("path/to/withtwosubfolder");
+         assert.equal(output.outputMessage, "File found");
+         assert.equal(output.filePath, "withtwosubfolder\n|--- folderwithfile1\n|    |--- file1.txt\n|--- folderwithfile2\n|    |--- file2.txt\n");
+    });
+
+
+    // complex
+    // |--- folder
+    // |    |--- folder
+    // |    |    |--- file.txt
+    // |    |    |--- file2.txt
+    // |    |    |--- folder
+    // |    |    |    |--- file.txt
+    // |--- folder2
+    // |    |--- file.txt
+    // |--- folderwithfile1
+    // |    |--- file.txt
+    test("location with a complex folder structure returns correct structure", () =>{
+         var output = divine.getFileStructure("path/to/complex");
+         assert.equal(output.outputMessage, "File found");
+         assert.equal(output.filePath, "complex\n|--- folder\n|    |--- folder\n|    |    |--- file.txt\n|    |    |--- file2.txt\n|    |    |--- folder\n|    |    |    |--- file.txt\n|--- folder2\n|    |--- file.txt\n|--- folderwithfile1\n|    |--- file1.txt\n");
+
+    });
+
 
     mock.restore
 
