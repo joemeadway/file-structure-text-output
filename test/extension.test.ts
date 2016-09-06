@@ -92,7 +92,6 @@ suite("FileStructureDivination Tests", () => {
          assert.equal(output.outputMessage, "File found");
          assert.equal(output.filePath, "multiplemixed\n|--- emptyfolder1\n|--- file.txt\n");
     });
-
     
     //expected:
     //withasubfolder
@@ -103,7 +102,7 @@ suite("FileStructureDivination Tests", () => {
          assert.equal(output.outputMessage, "File found");
          assert.equal(output.filePath, "withasubfolder\n|--- folderwithfile\n|    |--- file.txt\n");
     });
-    
+
     mock.restore
 
 

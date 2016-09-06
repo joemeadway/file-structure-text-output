@@ -57,23 +57,9 @@ export class FileStructureDivination{
             else{
                 output += this.writeThisLocation(currentFolderPath);
             }
-
-
-            // 
-            // //console.log(rootContents);
-            // //console.log(rootContents.length);
-            // if(rootContents.length > 0){    
-            //     output += this.getTextForFile(this._filePath);
-            //     for(var i = 0; i< rootContents.length; i++){
-            //         output += this.getTextForFile(this._filePath, rootContents[i]);
-            //         //output += "|--- "+rootContents[i]+"\n";
-            //         //console.log("found - " + filePath+"/" + rootContents[i]);
-            //     }
-            // }
         }
         else{
             output += this.writeThisLocation(currentFolderPath);
-            //append file
         }
 
 
