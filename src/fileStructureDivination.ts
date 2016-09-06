@@ -9,6 +9,7 @@ export class FileStructureDivination{
 
     private _filePath:string;
     private _root:string;
+    private _output:string;
 
     public getFileStructure(filePath: string) : FileStructureOutput {
         if(!fs.existsSync(filePath)){
@@ -16,6 +17,7 @@ export class FileStructureDivination{
         }
         this._filePath = filePath;
         this._root = path.basename(this._filePath);
+        this._output = '';
         
         var output = "";
         output += this._root + "\n";
@@ -42,6 +44,24 @@ export class FileStructureDivination{
         //how to handle errors etc. - check for magic strings? or is there a standard approach?
 
     }
+
+
+    //function getTextForLocation(filePath:string){
+    //  
+    //  
+    //}
+    
+    //function writeLoop(currentFolderPath:string){
+    //  this._output += writeThisLocation(currentFolderPath);
+    //  if(fs.lstatSync(currentFolderPath).isDirectory()){ 
+    //      if(folderContents.length > 0){
+    //            for(var i=0; i<folderContents.length; i++){
+    //              writeLoop(currentFolderPath+"/"+folderContents[i])
+    //            }
+    //      }   
+    //  }
+    //}
+
 
     private getTextForLocation(currentFolderPath : string) :string{
         var output = "";
