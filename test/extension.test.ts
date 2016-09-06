@@ -107,31 +107,3 @@ suite("FileStructureDivination Tests", () => {
 
 
 });
-
-// suite("FileNode Tests", () => {
-//     test("file node to string outputs own filename", () =>{
-//         var node = new FileNode();
-//         node.name = "file-name.txt";
-//         assert.equal(node.toString(), "file-name.txt");
-//     });
-    
-//     test("file node with child to string outputs own filename and child", () =>{
-//         var node = new FileNode();
-//         node.name = "dir-with-file";
-//         var childNode = new FileNode();
-//         childNode.name = "single-file.txt";
-//         node.children = childNode;
-//         assert.equal(node.toString(), "dir-with-file\n|- single-file.txt");
-//     });
-// });
-
-// This outputs location of where the code is executing
-// console.log(`Starting directory: ${process.cwd()}`);
-
-
-// // Defines a Mocha test suite to group tests of similar kind together
-// suite("Word Count Tests", () => {
-
-
-
-});

@@ -19,73 +19,31 @@ export class FileStructureDivination{
         this._root = path.basename(this._filePath);
         this._output = '';
         
-        var output = "";
-        output += this._root + "\n";
+        this._output += this._root+"\n";
 
-        //checking if root is directory or not here means this check is made twice
-        //could likely remove one call, but leaving it in for the time being          
         if(fs.lstatSync(this._filePath).isDirectory()){
-            output += this.getTextForLocation(this._filePath);
+            this.getTextForLocation(this._filePath);
         }
 
-
-        return new FileStructureOutput("File found",output);
-        
-        // output straight to string 
-        // loop through each item in folder
-        // get full file path - e.g. c:\dev\test\folder\file.txt
-        // remove everything up to root - \test\folder\file.txt
-        // count slashes - 3
-        // write out pipe-tab for number of slahes - 1 e.g. |   | 
-        // then append pipe-dashes-space-filename - |    |    |--- file.txt (and new line)
-        // if folder, loop through any children, adding to string
-        
-        
-        //how to handle errors etc. - check for magic strings? or is there a standard approach?
-
+        return new FileStructureOutput("File found",this._output);
     }
 
 
-    //function getTextForLocation(filePath:string){
-    //  
-    //  
-    //}
-    
-    //function writeLoop(currentFolderPath:string){
-    //  this._output += writeThisLocation(currentFolderPath);
-    //  if(fs.lstatSync(currentFolderPath).isDirectory()){ 
-    //      if(folderContents.length > 0){
-    //            for(var i=0; i<folderContents.length; i++){
-    //              writeLoop(currentFolderPath+"/"+folderContents[i])
-    //            }
-    //      }   
-    //  }
-    //}
+    private getTextForLocation(filePath:string){
+        this.writeLoop(filePath);
+    }
 
-
-    private getTextForLocation(currentFolderPath : string) :string{
-        var output = "";
-
+    private writeLoop(currentFolderPath:string){
+        this._output += this.writeThisLocation(currentFolderPath);
         if(fs.lstatSync(currentFolderPath).isDirectory()){ 
-            output += this.writeThisLocation(currentFolderPath);
+
             var folderContents = fs.readdirSync(currentFolderPath);
             if(folderContents.length > 0){
                 for(var i=0; i<folderContents.length; i++){
-                    output+=this.getTextForLocation(currentFolderPath+"/"+folderContents[i]);
+                    this.writeLoop(currentFolderPath+"/"+folderContents[i])
                 }
-            }
-            else{
-                output += this.writeThisLocation(currentFolderPath);
-            }
+            }   
         }
-        else{
-            output += this.writeThisLocation(currentFolderPath);
-        }
-
-
-
-        //"|--- "+rootContents[i]+"\n";
-        return output;
     }
 
     private writeThisLocation(locationPath:string):string{
@@ -115,14 +73,4 @@ export class FileStructureOutput{
         this.outputMessage = outputMessage;
         this.filePath = filePath;
     }
-}
-
-export class FileNode{
-    name: string;
-    children: FileNode;
-    public toString() : String{
-        return this.name;
-    }
-
-
 }
