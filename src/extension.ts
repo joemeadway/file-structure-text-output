@@ -36,11 +36,15 @@ export function activate(context: vscode.ExtensionContext) {
         var diviner = new FileStructureDivination();
         var returnedStructure = diviner.getFileStructure(location);
         
-
-        var editor = Window.activeTextEditor;
-        editor.edit(function (edit) {
-            edit.replace(selections[0], returnedStructure.filePath);
-        });
+        if(returnedStructure.outputMessage.startsWith("Error") ){
+            vscode.window.showErrorMessage(returnedStructure.outputMessage);
+        }
+        else{
+            var editor = Window.activeTextEditor;
+            editor.edit(function (edit) {
+                edit.replace(selections[0], returnedStructure.filePath);
+            });
+        }
 
     });
 
