@@ -1,26 +1,11 @@
-//
-// Note: This example test is leveraging the Mocha test framework.
-// Please refer to their documentation on https://mochajs.org/ for help.
-//
-
-// The module 'assert' provides assertion methods from node
 import * as assert from 'assert';
-
-// You can import and use all API from the 'vscode' module
-// as well as import your extension to test it
 import * as vscode from 'vscode';
-import * as ext from '../src/extension';
 import { FileStructureDivination } from '../src/FileStructureDivination';
-// import { FileNode } from '../src/FileStructureDivination';
 
 var mock = require('mock-fs');
 
-// Defines a Mocha test suite to group tests of similar kind together
 suite("FileStructureDivination Tests", () => {
-
-
     let divine = new FileStructureDivination();
- 
 
     //using mock-js to override default fs behaviour, which allows us to create a 
     //temporary in-memory file system for testing 
@@ -177,8 +162,6 @@ suite("FileStructureDivination Tests", () => {
 
     });
 
-
     mock.restore
-
 
 });
