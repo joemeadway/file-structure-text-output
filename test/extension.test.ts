@@ -1,6 +1,6 @@
 import * as assert from 'assert';
 import * as vscode from 'vscode';
-import { FileStructureDivination } from '../src/FileStructureDivination';
+import { FileStructureDivination } from '../src/fileStructureDivination';
 
 var mock = require('mock-fs');
 
